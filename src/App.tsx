@@ -12,6 +12,8 @@ function App() {
   return (
     <>
       <Navbar />
+      <Body />
+      <Footer />
 
       <div className="App">
         {/* ใช้ Ternary Operator ในการเลือกแสดงหน้าจอ */}
@@ -32,9 +34,7 @@ function App() {
           </div>
         )}
       </div>
-
-      <Body />
-      <Footer />
+      
     </>
   );
 }

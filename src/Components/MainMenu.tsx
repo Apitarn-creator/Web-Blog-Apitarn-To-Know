@@ -1,4 +1,4 @@
-// src/components/MainMenu.tsx
+
 import React from 'react';
 
 interface MainMenuProps {

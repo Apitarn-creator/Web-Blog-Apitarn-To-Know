@@ -1,16 +1,78 @@
+import React, { useState } from 'react';
+
 function Navbar() {
-    return (
-        <nav className="bg-white px-8 py-4 flex justify-between items-center border-b border-[#eee]">
-        <div className="text-2xl font-bold text-[#333]">
-          Apitarn<span className="text-black">.</span>
+  // สร้าง State สำหรับเปิด-ปิดเมนูในมือถือ
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <nav className="bg-white px-6 md:px-20 py-4 border-b border-[#eee] relative">
+      <div className="flex justify-between items-center">
+        
+        {/* Logo Section */}
+        <div className="text-2xl font-bold text-[#333] flex items-center">
+          Apitarn
+          <span className="text-green-500">.</span>
         </div>
 
-        <ul className="list-none flex gap-4 m-0 p-0 items-center">
-          <li><a href="/login" className="no-underline px-6 py-2 rounded-[25px] font-medium transition-all duration-300 text-sm text-[#333] border border-[#ccc] hover:bg-[#f5f5f5]">Log in</a></li>
-          <li><a href="/signup" className="no-underline px-6 py-2 rounded-[25px] font-medium transition-all duration-300 text-sm bg-[#222] text-white hover:bg-black">Sign up</a></li>
+        {/* Hamburger Icon - แสดงเฉพาะในมือถือ (hidden บน md ขึ้นไป) */}
+        <div className="md:hidden">
+          <button 
+            onClick={() => setIsOpen(!isOpen)} 
+            className="text-[#333] focus:outline-none"
+          >
+            {/* ไอคอนขีดสามขีด (Hamburger) */}
+            <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              {isOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
+              )}
+            </svg>
+          </button>
+        </div>
+
+        {/* Menu Links - Desktop (แสดงปกติ) */}
+        <ul className="hidden md:flex list-none gap-4 m-0 p-0 items-center">
+          {/* Social Icons */}
+          <li><a href="/discord" className="text-3xl text-[#333]"><i className="fa-brands fa-discord"></i></a></li>
+          <li><a href="/instagram" className="text-3xl text-[#333]"><i className="fa-brands fa-instagram"></i></a></li>
+          <li><a href="/tiktok" className="text-3xl text-[#333]"><i className="fa-brands fa-tiktok"></i></a></li>
+          <li><a href="/x-twitter" className="text-3xl text-[#333]"><i className="fa-brands fa-x-twitter"></i></a></li>
+          
+          <li className="ml-4">
+            <a href="/login" className="no-underline px-6 py-2 rounded-[25px] font-medium transition-all text-sm text-[#333] border border-[#ccc] hover:bg-[#f5f5f5]">
+              Log in
+            </a>
+          </li>
+          <li>
+            <a href="/signup" className="no-underline px-6 py-2 rounded-[25px] font-medium transition-all text-sm bg-[#333] text-white hover:bg-[#555]">
+              Sign up
+            </a>
+          </li>
         </ul>
-      </nav>
-    );
-  }
-  
-  export default Navbar;
+      </div>
+
+      {/* Mobile Menu Dropdown - แสดงเมื่อกดปุ่ม Hamburger */}
+      {isOpen && (
+        <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-[#eee] z-50">
+          <ul className="list-none flex flex-col p-6 gap-4 items-center">
+            <div className="flex gap-6 mb-4">
+               <li><a href="/discord" className="text-2xl text-[#333]"><i className="fa-brands fa-discord"></i></a></li>
+               <li><a href="/instagram" className="text-2xl text-[#333]"><i className="fa-brands fa-instagram"></i></a></li>
+               <li><a href="/tiktok" className="text-2xl text-[#333]"><i className="fa-brands fa-tiktok"></i></a></li>
+               <li><a href="/x-twitter" className="text-3xl text-[#333]"><i className="fa-brands fa-x-twitter"></i></a></li>
+            </div>
+            <li className="w-full text-center">
+              <a href="/login" className="block w-full py-2 text-[#333] border border-[#ccc] rounded-[25px]">Log in</a>
+            </li>
+            <li className="w-full text-center">
+              <a href="/signup" className="block w-full py-2 bg-[#333] text-white rounded-[25px]">Sign up</a>
+            </li>
+          </ul>
+        </div>
+      )}
+    </nav>
+  );
+}
+
+export default Navbar;
