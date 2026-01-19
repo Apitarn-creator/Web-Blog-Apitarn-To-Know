@@ -43,9 +43,9 @@ function Body() {
       <section className="flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-12 p-6 lg:p-12 mb-8 bg-white rounded-xl">
         <div className="hero-left text-center lg:text-left order-2 lg:order-1">
           <h1 className="text-3xl lg:text-5xl font-bold leading-tight text-black">
-            ระบุภายหลังA,<br/>ระบุภายหลังB
+          Digital Creator  <br/>Explore Ideas<br/> Approachable
           </h1>
-          <p className="text-gray-600 text-lg mt-4">ระบุภายหลังC,</p>
+          <p className="text-gray-600 text-lg mt-4">"As a Digital Creator<br/> I am dedicated to Exploring Ideas beyond<br/> limits and Sharing Stories that spark inspiration<br/> connecting creativity with the heart of every experience."</p>
         </div>
         
         <div className="hero-center order-1 lg:order-2">

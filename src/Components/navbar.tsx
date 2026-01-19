@@ -40,15 +40,15 @@ function Navbar() {
           <li><a href="/x-twitter" className="text-3xl text-[#333]"><i className="fa-brands fa-x-twitter"></i></a></li>
           
           <li className="ml-4">
-            <a href="/login" className="no-underline px-6 py-2 rounded-[25px] font-medium transition-all text-sm text-[#333] border border-[#ccc] hover:bg-[#f5f5f5]">
-              Log in
-            </a>
-          </li>
-          <li>
-            <a href="/signup" className="no-underline px-6 py-2 rounded-[25px] font-medium transition-all text-sm bg-[#333] text-white hover:bg-[#555]">
-              Sign up
-            </a>
-          </li>
+          <a href="/login" className="no-underline px-6 py-2 rounded-full font-semibold transition-all text-sm text-gray-700 border border-gray-300 hover:bg-gray-100">
+            Log in
+          </a>
+        </li>
+        <li>
+            <a href="/signup" className="no-underline px-6 py-2 rounded-full font-semibold transition-all text-sm bg-white text-black border border-gray-300 shadow-sm hover:bg-gray-50 hover:border-gray-400">
+            Sign up
+          </a>
+        </li>
         </ul>
       </div>
 
@@ -63,10 +63,10 @@ function Navbar() {
                <li><a href="/x-twitter" className="text-3xl text-[#333]"><i className="fa-brands fa-x-twitter"></i></a></li>
             </div>
             <li className="w-full text-center">
-              <a href="/login" className="block w-full py-2 text-[#333] border border-[#ccc] rounded-[25px]">Log in</a>
+              <a href="/login" className="block w-full py-2 text-indigo-600 border border-indigo-100 rounded-full hover:bg-indigo-50 transition-colors">Log in</a>
             </li>
             <li className="w-full text-center">
-              <a href="/signup" className="block w-full py-2 bg-[#333] text-white rounded-[25px]">Sign up</a>
+              <a href="/signup" className="block w-full py-2 bg-indigo-100 text-white rounded-full hover:bg-indigo-100 shadow-sm transition-all">Sign up</a>
             </li>
           </ul>
         </div>
