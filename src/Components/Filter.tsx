@@ -28,7 +28,7 @@ function Filter({ categories, activeCategory, onCategoryChange, searchTerm, onSe
               className={`px-6 py-2 rounded-full transition-all duration-200 border-2 font-medium cursor-pointer
                 ${
                   activeCategory === cat 
-                    ? 'bg-black text-white border-black shadow-md' // สไตล์เมื่อถูกเลือก (Active)
+                    ? 'bg-black text-white border-black shadow-md' // สไตล์เมื่อ (Active)
                     : 'bg-white text-gray-600 border-gray-200 hover:border-black hover:text-black' // สไตล์ปกติ
                 }`}
             >

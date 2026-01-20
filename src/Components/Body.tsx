@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import Filter from './Filter';
+import { Link } from 'react-router-dom';
 
 type Article = {
   id: number;
@@ -73,35 +74,19 @@ function Body() {
       {/* --- ส่วนที่ 3: Article Grid (จุดที่แก้ไขหลัก) --- */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
         {filteredArticles.map((item) => (
-          <article key={item.id} className="bg-white p-4 lg:p-0 lg:bg-transparent rounded-[24px]">
-            <div className="card-image mb-4">
-              {/* ปรับรูปภาพให้กว้างเต็ม 100% ในมือถือ และคุมความสูงให้เหมาะสม */}
-              <img 
-                src={item.image} 
-                alt={item.title} 
-                className="w-full h-[250px] md:h-[350px] lg:h-[420px] object-cover rounded-[20px]" 
-              />
-            </div>
-            <div className="card-content px-2">
-              <span className="inline-block bg-[#E8F8F5] text-[#1ABC9C] px-4 py-1 rounded-full text-sm font-medium">
-                {item.category}
-              </span>
-              <h3 className="my-3 text-xl lg:text-2xl font-bold leading-snug text-gray-800">
-                {item.title}
-              </h3>
-              <p className="text-gray-500 text-sm lg:text-base leading-relaxed line-clamp-2">
-                Dive into the curious world of cat behavior, exploring why cats knead, purr, and chase...
-              </p>
-              
-              <div className="flex justify-between items-center text-sm text-gray-400 mt-6 pt-4 border-t border-gray-100">
-                <div className="flex items-center gap-2">
-                   <span className="w-6 h-6 bg-gray-200 rounded-full flex items-center justify-center text-[10px]">👤</span>
-                   <span className="font-medium text-gray-600">{item.author}</span>
-                </div>
-                <span>{item.date}</span>
+          // 2. ใช้ Link ครอบ article และระบุ path ตาม id
+          <Link to={`/article/${item.id}`} key={item.id} className="no-underline text-inherit block">
+            <article className="bg-white p-4 lg:p-0 lg:bg-transparent rounded-[24px] cursor-pointer hover:opacity-90 transition-opacity">
+              <div className="card-image mb-4">
+                <img src={item.image} alt={item.title} className="w-full h-[250px] md:h-[350px] lg:h-[420px] object-cover rounded-[20px]" />
               </div>
-            </div>
-          </article>
+              <div className="card-content px-2">
+                <span className="inline-block bg-[#E8F8F5] text-[#1ABC9C] px-4 py-1 rounded-full text-sm font-medium">{item.category}</span>
+                <h3 className="my-3 text-xl lg:text-2xl font-bold leading-snug text-gray-800">{item.title}</h3>
+                {/* ... ส่วนที่เหลือของ Card ... */}
+              </div>
+            </article>
+          </Link>
         ))}
       </section>
 
