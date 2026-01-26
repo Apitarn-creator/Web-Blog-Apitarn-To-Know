@@ -16,25 +16,25 @@ function Filter({ categories, activeCategory, onCategoryChange, searchTerm, onSe
 
   return (
     <section className="filter-container">
-      <h2 className="text-[1.8rem] mb-6">Latest articles</h2>
+      
 
       <div className="flex justify-between bg-[#eee] p-3 rounded-[15px] mb-12 items-center">
       <div className="flex gap-3 flex-wrap">
-          {['All', ...categories].map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => onCategoryChange(cat)}
-              className={`px-6 py-2 rounded-full transition-all duration-200 border-2 font-medium cursor-pointer
-                ${
-                  activeCategory === cat 
-                    ? 'bg-black text-white border-black shadow-md' // สไตล์เมื่อ (Active)
-                    : 'bg-white text-gray-600 border-gray-200 hover:border-black hover:text-black' // สไตล์ปกติ
-                }`}
-            >
-              {cat}
-            </button>
-          ))}
+              {['All', ...categories].map((cat) => (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => onCategoryChange(cat)}
+                  className={`px-6 py-2 rounded-full transition-all duration-200 border-2 font-bold cursor-pointer
+                    ${
+                      activeCategory === cat 
+                        ? 'bg-black text-white border-black shadow-md' // เมื่อกดเลือก: พื้นดำ ตัวหนังสือขาว
+                        : 'bg-gray-500 text-white border-gray-500 hover:bg-black hover:border-black' // เมื่อไม่เลือก: พื้นเทาเข้ม ตัวหนังสือขาว
+                    }`}
+                >
+                  {cat}
+                </button>
+              ))}
         </div>
 
         <div className="relative">
@@ -44,7 +44,8 @@ function Filter({ categories, activeCategory, onCategoryChange, searchTerm, onSe
           value={localSearch}
           onChange={(e) => setLocalSearch(e.target.value)}
           onKeyUp={(e) => e.key === 'Enter' && onSearchChange(localSearch)}
-          className="border-2 border-gray-200 rounded-full px-6 py-2 outline-none focus:border-black transition-colors w-64"
+          className="border-2 border-gray-300 rounded-full px-6 py-2 outline-none focus:border-black transition-colors w-64 text-black placeholder-gray-500"
+  // ... rest of props
         />
           <button
             type="button"

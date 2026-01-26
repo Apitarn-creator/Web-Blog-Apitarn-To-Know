@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Navbar() {
   // สร้าง State สำหรับเปิด-ปิดเมนูในมือถือ
@@ -9,12 +10,12 @@ function Navbar() {
       <div className="flex justify-between items-center">
         
         {/* Logo Section */}
-        <div className="text-2xl font-bold text-[#333] flex items-center">
+        <Link to="/" className="text-2xl font-bold text-[#333] flex items-center">
           Apitarn
           <span className="text-green-500">.</span>
-        </div>
+        </Link>
 
-        {/* Hamburger Icon - แสดงเฉพาะในมือถือ (hidden บน md ขึ้นไป) */}
+        {/* Hamburger Icon - แสดงเฉพาะในมือถือ */}
         <div className="md:hidden">
           <button 
             onClick={() => setIsOpen(!isOpen)} 

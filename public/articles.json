@@ -1,0 +1,87 @@
+[
+  {
+    "id": 1,
+    "title": "Understanding Cat Behavior: Signals Your Feline Uses Daily",
+    "category": "Cat",
+    "author": "Thompson P.",
+    "date": "11 September 2024",
+    "image": "/bg-battle.png",
+    "summary": "Decode tail flicks, slow blinks, and the subtle ways cats communicate comfort, stress, and curiosity at home.",
+    "content": [
+      "Cats rely on body language long before they meow. A slow blink shows trust, while an upright tail signals a friendly greeting. Flattened ears or a twitching tail can warn that a cat needs space.",
+      "To build a calmer home, keep routines predictable and provide vertical spaces. Offer scratching posts in busy areas so the cat can mark territory without damaging furniture.",
+      "If you spot over-grooming or hiding, treat it as a stress signal. Add more hiding spots, reduce loud noises, and schedule a vet visit to rule out medical causes."
+    ]
+  },
+  {
+    "id": 2,
+    "title": "The Fascinating World of Cats: Why We Love Our Furry Friends",
+    "category": "Cat",
+    "author": "Thompson P.",
+    "date": "11 September 2024",
+    "image": "/project-w-1.jpg",
+    "summary": "From ancient temples to modern apartments, cats keep winning human hearts with independence and charm.",
+    "content": [
+      "History shows cats moving from grain protectors to household royalty. Their mix of self-reliance and selective affection makes each bond feel earned.",
+      "Daily enrichment matters: rotate toys, use puzzle feeders, and add window perches so indoor cats can safely watch the world.",
+      "Healthy cats need routine: fresh water, measured meals, and vet checkups twice a year. Small habits prevent costly emergencies later."
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Finding Motivation: Tiny Habits for Consistent Creativity",
+    "category": "Product",
+    "author": "Apitarn P.",
+    "date": "14 October 2024",
+    "image": "/project-w-1.jpg",
+    "summary": "Creative ruts rarely need grand plans. Use short timed sprints, frictionless setups, and generous drafts to keep moving.",
+    "content": [
+      "Start with 10-minute blocks. A visible timer reduces decision fatigue and proves that small wins accumulate.",
+      "Lower the bar for a first draft—aim for a 'bad first pass' that you can refine. Momentum matters more than perfection on day one.",
+      "End sessions with a short note about what to do next. Future-you will thank present-you for a clear starting point."
+    ]
+  },
+  {
+    "id": 4,
+    "title": "The Science of the Cat's Purr: More Than a Happy Sound",
+    "category": "Cat",
+    "author": "Thompson P.",
+    "date": "18 October 2024",
+    "image": "/bg-battle.png",
+    "summary": "Purring sits between communication and healing. Frequencies between 25–150 Hz may aid tissue repair for cats—and maybe humans.",
+    "content": [
+      "Cats purr when relaxed, but also when hurt. The vibration may be self-soothing or even supportive for bone density and wound recovery.",
+      "Notice context: a relaxed posture plus kneading suggests contentment, while purring with dilated pupils or flattened ears can signal pain.",
+      "If your cat purrs while hiding or refusing food, schedule a vet check. Pain behaviors can be subtle."
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Unlocking Creativity with Constraints",
+    "category": "Product",
+    "author": "Apitarn P.",
+    "date": "02 November 2024",
+    "image": "/project-w-1.jpg",
+    "summary": "Limit choices to open new ideas. Short deadlines, smaller palettes, and word counts reduce overthinking and spark momentum.",
+    "content": [
+      "Pick a single theme for a week and ship daily variations. Repetition reveals patterns you can reuse or remix later.",
+      "Use constraints to warm up: write with only 100 words or sketch with two colors. The restriction frees you to focus on structure.",
+      "Review constraints often. If one stops helping, replace it instead of dropping practice altogether."
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Top 10 Health Tips Every Cat Owner Should Know",
+    "category": "Cat",
+    "author": "Thompson P.",
+    "date": "22 November 2024",
+    "image": "/bg-battle.png",
+    "summary": "Keep cats thriving with simple routines: fresh water, measured meals, and litter box hygiene prevent most avoidable vet visits.",
+    "content": [
+      "Hydration is the easiest health upgrade. Offer multiple water bowls or a fountain, especially for cats on dry food.",
+      "Keep the litter box rule: one per cat plus one extra. Scoop daily to avoid accidents and urinary issues.",
+      "Schedule preventive care twice a year. Early dental cleanings and vaccines cost far less than emergency treatments."
+    ]
+  }
+]
+
