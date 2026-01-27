@@ -25,7 +25,7 @@ function ArticleSection() {
 
   return (
     <div className="mt-10">
-      {/* หัวข้อหลัก แสดงที่นี่ที่เดียว */}
+
       <h2 className="text-3xl md:text-4xl font-extrabold text-black mb-8">Latest articles</h2>
 
       <Filter
@@ -38,6 +38,7 @@ function ArticleSection() {
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 mt-10">
         {filteredArticles.map((item: Article) => (
+          
           <Link to={`/article/${item.id}`} key={item.id} className="group no-underline block">
             <article className="flex flex-col h-full bg-white md:bg-transparent rounded-[32px] md:rounded-none overflow-hidden transition-all">
               <div className="relative overflow-hidden rounded-[24px] mb-6 shadow-sm">
@@ -46,7 +47,7 @@ function ArticleSection() {
 
               <div className="flex flex-col grow px-5 md:px-0">
                 <div className="mb-3">
-                  {/* แก้ไขสี: พื้นเข้ม (Emerald) ตัวหนังสือขาว เพื่อให้มองเห็นชัดเจน */}
+                  
                   <span className="bg-emerald-600 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
                     {item.category}
                   </span>
