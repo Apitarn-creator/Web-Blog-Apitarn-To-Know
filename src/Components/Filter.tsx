@@ -8,7 +8,7 @@ type FilterProps = {
   onSearchChange: (value: string) => void;
 };
 
-function Filter({ categories, activeCategory, onCategoryChange, searchTerm, onSearchChange }: FilterProps) {
+function Filter({ categories, activeCategory, onCategoryChange, searchTerm, onSearchChange }: FilterProps)  {
   const [localSearch, setLocalSearch] = useState(searchTerm);
 
   // sync searchTerm จากภายนอก (เผื่อถูก reset)

@@ -2,13 +2,14 @@ import axios from 'axios';
 
 export type Article = {
   id: number;
-  title: string;
+  image: string;
   category: string;
+  title: string;
+  description: string; // ข้อมูลใหม่แทนที่ summary
   author: string;
   date: string;
-  image: string;
-  summary: string;
-  content: string[];
+  likes: number;       // ข้อมูลใหม่
+  content: string;     // ข้อมูลใหม่เป็น String ยาวที่มีเครื่องหมาย \n
 };
 
 const client = axios.create({

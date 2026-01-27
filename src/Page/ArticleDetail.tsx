@@ -1,99 +1,73 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useMemo } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import Navbar from '../Components/navbar';
 import Footer from '../Components/Footer';
-import { fetchArticleById, type Article } from '../services/articleService';
+import { blogPosts } from '../data/blogPosts';
 
 function ArticleDetail() {
   const { id } = useParams();
-  const numericId = useMemo(() => Number(id), [id]);
+  
+  // ค้นหาบทความที่ตรงกับ ID
+  const article = useMemo(() => {
+    return blogPosts.find((post) => post.id === Number(id));
+  }, [id]);
 
-  const [article, setArticle] = useState<Article | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    let active = true;
-
-    const load = async () => {
-      if (!Number.isFinite(numericId)) {
-        setError('ไม่พบบทความที่ต้องการ');
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const data = await fetchArticleById(numericId);
-        if (active) {
-          setArticle(data ?? null);
-          setError(data ? null : 'ไม่พบบทความที่ต้องการ');
-        }
-      } catch (err) {
-        if (active) {
-          setError('เกิดข้อผิดพลาดในการโหลดบทความ');
-        }
-      } finally {
-        if (active) {
-          setLoading(false);
-        }
-      }
-    };
-
-    load();
-
-    return () => {
-      active = false;
-    };
-  }, [numericId]);
+  if (!article) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <h2 className="text-2xl font-bold mb-4">ไม่พบบทความ</h2>
+        <Link to="/" className="text-emerald-600 font-bold">กลับหน้าหลัก</Link>
+      </div>
+    );
+  }
 
   return (
-    <>
+    <div className="bg-white min-h-screen">
       <Navbar />
-      <main className="max-w-[1000px] mx-auto px-6 py-10">
-        {loading && <p className="text-center text-gray-500">กำลังโหลดข้อมูลบทความ...</p>}
-        {error && !loading && <p className="text-center text-red-600">{error}</p>}
+      <main className="max-w-6xl mx-auto px-6 py-12">
+        <Link to="/" className="text-gray-400 hover:text-black mb-8 inline-block">&larr; Back to articles</Link>
 
-        {!loading && !error && article && (
-          <article>
-            <img 
-              src={article.image} 
-              className="w-full h-[400px] md:h-[600px] object-cover rounded-3xl shadow-lg mb-8" 
-              alt={article.title} 
-            />
-
-            <div className="flex flex-col lg:flex-row gap-12">
-              {/* ส่วนเนื้อหา (ฝั่งซ้าย) */}
-              <div className="lg:w-2/3">
-                <span className="text-emerald-500 font-bold">{article.category} • {article.date}</span>
-                <h1 className="text-4xl font-bold mt-4 mb-6">{article.title}</h1>
-                <div className="text-gray-700 leading-relaxed space-y-4">
-                  {article.content.map((paragraph, idx) => (
-                    <p key={idx}>{paragraph}</p>
-                  ))}
-                </div>
-              </div>
-
-              {/* ส่วนผู้เขียน (ฝั่งขวา/Sidebar) */}
-              <aside className="lg:w-1/3">
-                <div className="bg-gray-50 p-6 rounded-2xl sticky top-24">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">👤</div>
-                    <div>
-                      <p className="text-xs text-gray-400">Author</p>
-                      <p className="font-bold">{article.author}</p>
-                    </div>
-                  </div>
-                  <p className="text-sm text-gray-500 leading-relaxed">
-                    I am a pet enthusiast and freelance writer who specializes in animal behavior and care.
-                  </p>
-                </div>
-              </aside>
+        <div className="flex flex-col lg:flex-row gap-12">
+          <div className="lg:w-2/3">
+            <div className="flex items-center gap-4 mb-6">
+              <span className="bg-emerald-600 text-white px-5 py-1.5 rounded-full text-xs font-bold uppercase shadow-sm">
+                {article.category}
+              </span>
+              <span className="text-gray-400 text-sm">{article.date}</span>
+              <span className="text-rose-500 font-bold text-sm">❤️ {article.likes} Likes</span>
             </div>
-          </article>
-        )}
+
+            <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-8 leading-tight">
+              {article.title}
+            </h1>
+
+            <img src={article.image} className="w-full rounded-[32px] mb-10 shadow-xl" alt={article.title} />
+
+            {/* แสดงเนื้อหาแบบ String และรักษาการเว้นบรรทัด (\n) */}
+            <div className="text-gray-700 text-lg md:text-xl leading-relaxed whitespace-pre-line">
+              {article.content}
+            </div>
+          </div>
+
+          <aside className="lg:w-1/3">
+            <div className="sticky top-28 bg-gray-50 p-8 rounded-[32px] border border-gray-100">
+              <p className="text-xs uppercase tracking-widest text-gray-400 font-bold mb-6">Author</p>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 bg-black rounded-full flex items-center justify-center text-white text-xl font-bold">
+                  {article.author.charAt(0)}
+                </div>
+                <p className="text-xl font-bold text-gray-900">{article.author}</p>
+              </div>
+              <p className="text-gray-500 mb-8">Digital Creator & Writer</p>
+              <button className="w-full bg-black text-white py-3 rounded-full font-bold hover:bg-gray-800 transition-all">
+                Follow
+              </button>
+            </div>
+          </aside>
+        </div>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 
