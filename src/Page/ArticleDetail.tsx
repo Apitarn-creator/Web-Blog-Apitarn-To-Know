@@ -103,7 +103,7 @@ function ArticleDetail() {
 
             {/* ส่วนคอมเมนต์ที่ต้อง Login */}
             <div className="mt-12 border-t pt-8">
-              <h3 className="text-2xl font-bold mb-4">แสดงความคิดเห็น</h3>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">Comment</h3>
               <textarea 
                 readOnly
                 onClick={handleProtectedAction}
