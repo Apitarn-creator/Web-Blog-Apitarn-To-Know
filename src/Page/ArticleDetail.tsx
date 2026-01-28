@@ -91,9 +91,13 @@ function ArticleDetail() {
                 <span>{article.date}</span>
             </div>
 
-            <img src={article.image} className="w-full aspect-video object-cover rounded-[32px] mb-10 shadow-lg" alt="" />
+            <img src={article.image} className="w-full aspect-video object-cover rounded-[32px] mb-8 shadow-lg" alt="" />
+            
+            <div className="text-2xl font-bold prose prose-lg max-w-none text-gray-900 leading-relaxed mb-3">
+              <ReactMarkdown>{article.description}</ReactMarkdown>
+            </div>
 
-            <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+            <div className="text-xl prose prose-lg max-w-none text-gray-900 leading-relaxed">
               <ReactMarkdown>{article.content}</ReactMarkdown>
             </div>
 
@@ -116,14 +120,14 @@ function ArticleDetail() {
                 <div className="w-20 h-20 bg-black text-white rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4">
                   {article.author.charAt(0)}
                 </div>
-                <h4 className="text-xl font-bold">{article.author}</h4>
+                <h4 className="text-black text-xl font-bold">{article.author}</h4>
                 <p className="text-gray-500 text-sm mb-6">Digital Content Creator</p>
                 
                 <button 
                   onClick={handleProtectedAction}
-                  className="w-full py-4 bg-rose-50 text-rose-600 rounded-full font-bold hover:bg-rose-100 transition-all flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-rose-50 text-rose-200 rounded-full font-bold hover:bg-rose-100 transition-all flex items-center justify-center gap-2"
                 >
-                  ❤️ ไลก์ ({article.likes})
+                  ❤️ Like ({article.likes})
                 </button>
               </div>
 

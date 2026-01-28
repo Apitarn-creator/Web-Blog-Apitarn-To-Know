@@ -60,7 +60,7 @@ function Filter({ categories, activeCategory, onCategoryChange, searchTerm, onSe
                 ${
                   activeCategory === cat 
                     ? 'bg-emerald-500 text-white border-emerald-600 shadow-md'
-                    : 'bg-white text-gray-600 border-gray-200 hover:border-emerald-500 hover:text-emerald-500'
+                    : 'bg-white text-gray-700 border-gray-200 hover:border-emerald-500 hover:text-emerald-500'
                 }`}
             >
               {cat}
