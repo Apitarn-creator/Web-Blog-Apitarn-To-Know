@@ -115,8 +115,8 @@ export async function fetchArticleById(id: number): Promise<Article | undefined>
     // เนื่องจาก API อาจไม่มี endpoint สำหรับดึงบทความเดียว
     // เราจะดึงทั้งหมดแล้วกรองตาม ID
     // หรือถ้า API มี endpoint /posts/:id ก็สามารถใช้ได้
-    const articles = await fetchArticles({ limit: 1000 });
-    return articles.find((article) => article.id === id);
+    const data = await fetchArticles({ page: 1, limit: 100 });
+    return data.find(article => article.id === id);
   } catch (error) {
     console.error('Error fetching article by ID:', error);
     throw error;

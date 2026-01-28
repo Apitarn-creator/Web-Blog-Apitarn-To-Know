@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Filter from './Filter';
 import { fetchArticles, type Article } from '../services/articleService';
 
+
 function ArticleSection() {
   const [category, setCategory] = useState<'All' | string>('Highlight');
   const [search, setSearch] = useState('');
@@ -86,7 +87,7 @@ function ArticleSection() {
         <section className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 mt-10">
           {articles.map((item: Article) => (
             
-            <Link to={`/article/${item.id}`} key={item.id} className="group no-underline block">
+            <Link to={'/post/' + item.id} key={item.id} className="block group">
               <article className="flex flex-col h-full bg-white md:bg-transparent rounded-[32px] md:rounded-none overflow-hidden transition-all">
                 <div className="relative overflow-hidden rounded-[24px] mb-6 shadow-sm">
                   <img src={item.image} alt={item.title} className="w-full h-[280px] md:h-[400px] object-cover transition-transform duration-500 group-hover:scale-105" />
