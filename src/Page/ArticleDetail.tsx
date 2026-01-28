@@ -1,22 +1,59 @@
-import { useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Navbar from '../Components/navbar';
 import Footer from '../Components/Footer';
-import { blogPosts } from '../data/blogPosts';
+import { fetchArticleById, type Article } from '../services/articleService';
 
 function ArticleDetail() {
   const { id } = useParams();
+  const [article, setArticle] = useState<Article | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   
-  // ค้นหาบทความที่ตรงกับ ID
-  const article = useMemo(() => {
-    return blogPosts.find((post) => post.id === Number(id));
+  // ดึงข้อมูลบทความจาก API
+  useEffect(() => {
+    const loadArticle = async () => {
+      if (!id) return;
+      
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await fetchArticleById(Number(id));
+        if (data) {
+          setArticle(data);
+        } else {
+          setError('ไม่พบบทความ');
+        }
+      } catch (err) {
+        setError('ไม่สามารถโหลดข้อมูลบทความได้');
+        console.error('Error loading article:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadArticle();
   }, [id]);
 
-  if (!article) {
+  if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
-        <h2 className="text-2xl font-bold mb-4">ไม่พบบทความ</h2>
-        <Link to="/" className="text-emerald-600 font-bold">กลับหน้าหลัก</Link>
+      <div className="bg-white min-h-screen">
+        <Navbar />
+        <div className="min-h-screen flex flex-col items-center justify-center">
+          <p className="text-gray-600">กำลังโหลดข้อมูล...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !article) {
+    return (
+      <div className="bg-white min-h-screen">
+        <Navbar />
+        <div className="min-h-screen flex flex-col items-center justify-center">
+          <h2 className="text-2xl font-bold mb-4">{error || 'ไม่พบบทความ'}</h2>
+          <Link to="/" className="text-emerald-600 font-bold">กลับหน้าหลัก</Link>
+        </div>
       </div>
     );
   }

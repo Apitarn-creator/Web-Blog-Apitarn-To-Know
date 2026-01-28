@@ -28,8 +28,9 @@ function Filter({ categories, activeCategory, onCategoryChange, searchTerm, onSe
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const allCategories = ['All', ...categories];
-  const displayCategory = activeCategory === 'All' ? 'Highlight' : activeCategory;
+  // ใช้ 'Highlight' แทน 'All' และแสดงทุกหมวดหมู่
+  const allCategories = ['Highlight', ...categories];
+  const displayCategory = activeCategory;
 
   return (
     <section className="filter-container">
@@ -64,7 +65,7 @@ function Filter({ categories, activeCategory, onCategoryChange, searchTerm, onSe
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="w-full bg-white rounded-lg px-4 py-3 pr-10 border border-gray-200 text-left text-gray-400 focus:outline-none focus:border-gray-300 flex items-center justify-between"
           >
-            <span className={activeCategory !== 'All' ? 'text-white' : ''}>{displayCategory}</span>
+            <span className={activeCategory !== 'Highlight' ? 'text-white' : ''}>{displayCategory}</span>
             <svg
               className={`w-5 h-5 text-gray-400 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
               fill="none"
@@ -79,7 +80,7 @@ function Filter({ categories, activeCategory, onCategoryChange, searchTerm, onSe
           {isDropdownOpen && (
             <div className="absolute z-10 w-full mt-2 bg-white rounded-lg border border-gray-200 shadow-lg overflow-hidden">
               {allCategories.map((cat) => {
-                const displayName = cat === 'All' ? 'Highlight' : cat;
+                const displayName = cat;
                 const isSelected = activeCategory === cat;
                 return (
                   <button
