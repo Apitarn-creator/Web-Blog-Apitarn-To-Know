@@ -5,7 +5,9 @@ import NotFound from './Page/NotFound';
 import Login from './Page/Login';
 import SignUp from './Page/SignUp';
 import AdminDashboard from './Page/AdminDashboard';
-import UserProfile from './Page/UserProfile'; // <--- 1. Import มา
+import UserProfile from './Page/UserProfile';
+import HealthTestPage from './Page/HealthTestPage';
+import CreatePostPage from './Page/CreatePostPage';
 
 function App() {
   return (
@@ -23,6 +25,10 @@ function App() {
 
           {/* หน้า 404 ไว้ล่างสุดเสมอ */}
           <Route path='*' element={<NotFound />} />
+          <Route path='/test-health' element={<HealthTestPage />} />
+          
+          <Route path='*' element={<NotFound />} />
+          <Route path="/create-post" element={<CreatePostPage />} />
         </Routes>
       </BrowserRouter>
     </>

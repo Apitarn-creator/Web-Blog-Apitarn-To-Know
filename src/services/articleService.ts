@@ -30,7 +30,7 @@ type ApiResponse = {
 };
 
 const client = axios.create({
-  baseURL: 'https://blog-post-project-api.vercel.app',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:4001',
   timeout: 5000,
 });
 
