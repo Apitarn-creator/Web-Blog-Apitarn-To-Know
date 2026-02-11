@@ -1,15 +1,16 @@
 import axios from 'axios';
 
+// 1. นิยามหน้าตาข้อมูลแบบที่ UI (ArticleSection) ต้องการ
 export type Article = {
   id: number;
   image: string;
-  category: string;
+  category: string; // UI ต้องการชื่อหมวดหมู่ (String)
   title: string;
-  description: string; // เปลี่ยนจาก summary เป็น description
+  description: string;
   author: string;
   date: string;
-  likes: number;       // ข้อมูลที่เพิ่มมาใหม่
-  content: string;     // เปลี่ยนจาก array เป็น string
+  likes: number;
+  content: string;
 };
 
 export type FetchArticlesParams = {
@@ -19,106 +20,104 @@ export type FetchArticlesParams = {
   keyword?: string;
 };
 
-// เพิ่ม type สำหรับ API response
-type ApiResponse = {
-  totalPosts: number;
-  totalPages: number;
-  currentPage: number;
-  limit: number;
-  posts: Article[];
-  nextPage?: number;
-};
-
 const client = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:4001',
   timeout: 5000,
 });
 
-/**
- * แปลงวันที่จาก ISO 8601 format เป็นรูปแบบที่อ่านง่าย
- * เช่น "2024-08-21T00:00:00.000Z" -> "21 August 2024"
- */
+// ฟังก์ชันแปลงวันที่ให้สวยงาม
 export function formatDate(isoDate: string): string {
   try {
+    if (!isoDate) return "";
     const date = new Date(isoDate);
-    
-    // ตรวจสอบว่า date ถูกต้องหรือไม่
-    if (isNaN(date.getTime())) {
-      console.warn('Invalid date:', isoDate);
-      return isoDate; // คืนค่าเดิมถ้า date ไม่ถูกต้อง
-    }
-    
-    const months = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    
-    const day = date.getDate();
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-    
-    return `${day} ${month} ${year}`;
+    // แปลงเป็นรูปแบบ: 21 August 2024
+    return date.toLocaleDateString("en-GB", { day: 'numeric', month: 'long', year: 'numeric' });
   } catch (error) {
-    console.error('Error formatting date:', error);
-    return isoDate; // คืนค่าเดิมถ้ามี error
+    return isoDate;
   }
 }
 
-/**
- * ดึงข้อมูลบทความจาก API พร้อม Query Parameters
- */
+// ฟังก์ชันจำลองชื่อหมวดหมู่ (เพราะ DB ส่งมาแค่ ID)
+function getCategoryName(id: number): string {
+  const categories: Record<number, string> = {
+    1: "Highlight",
+    2: "Technology",
+    3: "Life Style",
+    4: "Programming"
+  };
+  return categories[id] || "General";
+}
+
 export async function fetchArticles(params?: FetchArticlesParams): Promise<Article[]> {
   try {
-    // เปลี่ยน type จาก Article[] เป็น ApiResponse
-    const { data } = await client.get<ApiResponse>('/posts', {
+    // 2. เรียกข้อมูลจาก Backend
+    const response = await client.get('/posts', {
       params: {
-        page: params?.page || 1,
-        limit: params?.limit || 6,
-        // แก้ไข: เพิ่มเงื่อนไข 'Highlight' ด้วย
-        ...(params?.category && params.category !== 'All' && params.category !== 'Highlight' && { category: params.category }),
-        ...(params?.keyword && { keyword: params.keyword }),
-      },
+        keyword: params?.keyword,
+        category: params?.category === 'Highlight' || params?.category === 'All' ? undefined : params?.category,
+        page: params?.page,
+        limit: params?.limit || 100
+      }
     });
-    
-    // API response มี structure เป็น { posts: [...], totalPosts, ... }
-    // ดังนั้นต้องเข้าถึง data.posts แทน data โดยตรง
-    if (!data.posts || !Array.isArray(data.posts)) {
-      console.warn('Unexpected API response structure:', data);
+
+    // 3. ดึงข้อมูลดิบจาก Response
+    // (เช็คว่า Backend ส่งมาแบบ { data: [...] } หรือ { data: { data: [...] } })
+    const rawData = response.data.data || []; 
+
+    if (!Array.isArray(rawData)) {
+      console.warn("API response format is not an array:", rawData);
       return [];
     }
-    
-    // แปลงวันที่ให้อยู่ในรูปแบบที่อ่านง่าย
-    return data.posts.map(article => ({
-      ...article,
-      date: formatDate(article.date),
+
+    // 4. ✅ หัวใจสำคัญ: แปลงข้อมูล DB (Snake Case) -> UI (Camel Case)
+    // เพื่อให้ ArticleSection ใช้งานได้โดยไม่พัง
+    const mappedData: Article[] = rawData.map((item: any) => ({
+      id: item.id,
+      title: item.title,
+      image: item.image || "https://placehold.co/600x400", // รูปสำรองกันพัง
+      description: item.description || "",
+      content: item.content || "",
+      
+      // แปลง ID เป็นชื่อหมวดหมู่ (เพื่อให้ Filter ใน ArticleSection ทำงานได้)
+      category: getCategoryName(item.category_id),
+      
+      // ข้อมูลที่ DB ยังไม่มี ให้ใส่ค่า Default ไปก่อน กัน Error
+      author: "Admin", 
+      likes: item.likes_count || 0,
+      
+      // แปลงวันที่ created_at จาก DB ให้เป็น format ที่ UI ต้องการ
+      date: formatDate(item.created_at)
     }));
+
+    return mappedData;
+
   } catch (error) {
     console.error('Error fetching articles:', error);
-    // แสดง error message ที่ละเอียดขึ้น
-    if (axios.isAxiosError(error)) {
-      console.error('Axios error details:', {
-        message: error.message,
-        status: error.response?.status,
-        statusText: error.response?.statusText,
-        data: error.response?.data,
-      });
-    }
-    throw error;
+    return []; // ส่งอาเรย์ว่างกลับไป กันหน้าเว็บขาว
   }
 }
 
-/**
- * ดึงข้อมูลบทความตาม ID
- */
 export async function fetchArticleById(id: number): Promise<Article | undefined> {
   try {
-    // เนื่องจาก API อาจไม่มี endpoint สำหรับดึงบทความเดียว
-    // เราจะดึงทั้งหมดแล้วกรองตาม ID
-    // หรือถ้า API มี endpoint /posts/:id ก็สามารถใช้ได้
-    const data = await fetchArticles({ page: 1, limit: 100 });
-    return data.find(article => article.id === id);
+    const response = await client.get(`/posts/${id}`);
+    const item = response.data.data;
+    
+    if (!item) return undefined;
+
+    // ต้องแปลงข้อมูลเหมือนกัน
+    return {
+      id: item.id,
+      title: item.title,
+      image: item.image || "https://placehold.co/600x400",
+      description: item.description || "",
+      content: item.content || "",
+      category: getCategoryName(item.category_id),
+      author: "Admin",
+      likes: item.likes_count || 0,
+      date: formatDate(item.created_at)
+    };
   } catch (error) {
     console.error('Error fetching article by ID:', error);
-    throw error;
+    return undefined;
   }
 }
