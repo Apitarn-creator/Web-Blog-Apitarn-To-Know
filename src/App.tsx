@@ -6,7 +6,7 @@ import Login from './Page/Login';
 import SignUp from './Page/SignUp';
 import AdminDashboard from './Page/AdminDashboard';
 import UserProfile from './Page/UserProfile';
-import HealthTestPage from './Page/HealthTestPage';
+import HealthTestPage from "./Page/HealthTestPage";
 import CreatePostPage from './Page/CreatePostPage';
 import CategoryManagementPage from './Page/CategoryManagementPage';
 import NotificationPage from './Page/NotificationPage'; 
@@ -37,7 +37,7 @@ function App() {
           </Route>
 
           {/* Utility Routes */}
-          <Route path='/test-health' element={<HealthTestPage />} />
+          <Route path="/test-health" element={<HealthTestPage />} />
           
           {/* 404 Route */}
           <Route path='*' element={<NotFound />} />
