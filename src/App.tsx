@@ -1,4 +1,4 @@
-import { BrowserRouter , Routes , Route  } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './Page/Home';
 import ArticleDetail from './Page/ArticleDetail';
 import NotFound from './Page/NotFound';
@@ -8,27 +8,39 @@ import AdminDashboard from './Page/AdminDashboard';
 import UserProfile from './Page/UserProfile';
 import HealthTestPage from './Page/HealthTestPage';
 import CreatePostPage from './Page/CreatePostPage';
+import CategoryManagementPage from './Page/CategoryManagementPage';
+import NotificationPage from './Page/NotificationPage'; 
+import AdminLayout from './Components/AdminLayout';
+import ResetPasswordPage from './Page/ResetPasswordPage';
+import DebugPage from './Page/DebugPage';
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element = {<Home /> } />
+          {/* Public Routes */}
+          <Route path='/' element={<Home />} />
           <Route path='/post/:postId' element={<ArticleDetail />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/signup' element={<SignUp />} /> 
-          <Route path='/admin' element={<AdminDashboard />} />
-          
-          {/* 2. เพิ่ม Route สำหรับ Member Management (Profile) */}
-          <Route path='/profile' element={<UserProfile />} /> 
+          <Route path='/signup' element={<SignUp />} />
 
-          {/* หน้า 404 ไว้ล่างสุดเสมอ */}
-          <Route path='*' element={<NotFound />} />
+          {/* Admin Routes (ใช้ Layout เดียวกัน มี Sidebar ติดมาด้วย) */}
+          <Route element={<AdminLayout />}>
+             <Route path="/create-post" element={<CreatePostPage />} />
+             <Route path="/category-management" element={<CategoryManagementPage />} />
+             <Route path="/user-profile" element={<UserProfile />} />
+             <Route path="/notification" element={<NotificationPage />} />
+             <Route path="/reset-password" element={<ResetPasswordPage />} />
+             <Route path="/debug" element={<DebugPage />} />
+             <Route path='/admin' element={<AdminDashboard />} />
+          </Route>
+
+          {/* Utility Routes */}
           <Route path='/test-health' element={<HealthTestPage />} />
           
+          {/* 404 Route */}
           <Route path='*' element={<NotFound />} />
-          <Route path="/create-post" element={<CreatePostPage />} />
         </Routes>
       </BrowserRouter>
     </>

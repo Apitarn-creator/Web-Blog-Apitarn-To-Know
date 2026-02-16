@@ -1,149 +1,136 @@
 import { useState } from 'react';
 import axios from 'axios';
-import Navbar from '../Components/navbar';
-import Footer from '../Components/Footer';
+import { useNavigate } from 'react-router-dom';
+import { 
+  Image as ImageIcon,
+  CheckCircle,
+  XCircle,
+  Loader2
+} from 'lucide-react';
 
-// ดึง URL จาก .env
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4001';
 
 function CreatePostPage() {
-  // สร้าง State สำหรับเก็บค่าจากฟอร์ม
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState<{type: 'success' | 'error', message: string} | null>(null);
+
   const [formData, setFormData] = useState({
     title: '',
     image: '',
-    category_id: 1, // Default ไว้ก่อน
+    category_id: 1, 
+    author: 'Apitarn P.',
     description: '',
     content: '',
-    status_id: 1 // Default = Published
+    status_id: 1
   });
 
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-
-  // ฟังก์ชันสำหรับเวลากรอกข้อมูลในฟอร์ม
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
   };
 
-  // ฟังก์ชันเมื่อกดปุ่ม Submit
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
+  const handleSubmit = async (statusId: number) => {
     setLoading(true);
-    setMessage('');
+    setNotification(null);
+    const payload = { ...formData, status_id: statusId };
 
     try {
-      // ยิงข้อมูลไปที่ Backend (/post)
-      await axios.post(`${API_BASE_URL}/post`, formData);
-      setMessage('✅ สร้างบทความสำเร็จเรียบร้อย!');
+      await axios.post(`${API_BASE_URL}/posts`, payload);
+      setNotification({
+        type: 'success', 
+        message: statusId === 1 ? '🎉 Published article successfully!' : '📁 Saved as draft successfully!'
+      });
+      if (statusId === 1) setTimeout(() => navigate('/'), 2000);
     } catch (error: any) {
       console.error(error);
-      setMessage('❌ เกิดข้อผิดพลาด: ' + (error.response?.data?.message || error.message));
+      setNotification({
+        type: 'error', 
+        message: 'Something went wrong: ' + (error.response?.data?.message || error.message)
+      });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-900 text-white">
-      <Navbar />
-      <div className="flex-grow container mx-auto p-6 max-w-2xl">
-        <h1 className="text-3xl font-bold mb-6 text-center">Create New Post</h1>
-        
-        <form onSubmit={handleSubmit} className="bg-slate-800 p-6 rounded-xl shadow-lg space-y-4">
-          
-          <div>
-            <label className="block mb-1 font-semibold">Title</label>
-            <input 
-              type="text" 
-              name="title"
-              value={formData.title}
-              onChange={handleChange}
-              className="w-full p-2 rounded bg-slate-700 border border-slate-600 focus:border-blue-500 outline-none"
-              placeholder="หัวข้อบทความ..."
-              required 
-            />
-          </div>
-
-          <div>
-            <label className="block mb-1 font-semibold">Image URL</label>
-            <input 
-              type="text" 
-              name="image"
-              value={formData.image}
-              onChange={handleChange}
-              className="w-full p-2 rounded bg-slate-700 border border-slate-600"
-              placeholder="https://example.com/image.jpg"
-              required 
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block mb-1 font-semibold">Category ID</label>
-              <input 
-                type="number" 
-                name="category_id"
-                value={formData.category_id}
-                onChange={handleChange}
-                className="w-full p-2 rounded bg-slate-700 border border-slate-600"
-              />
-            </div>
-            <div>
-              <label className="block mb-1 font-semibold">Status ID</label>
-              <input 
-                type="number" 
-                name="status_id"
-                value={formData.status_id}
-                onChange={handleChange}
-                className="w-full p-2 rounded bg-slate-700 border border-slate-600"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block mb-1 font-semibold">Description</label>
-            <textarea 
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full p-2 rounded bg-slate-700 border border-slate-600"
-              placeholder="คำอธิบายสั้นๆ..."
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block mb-1 font-semibold">Content</label>
-            <textarea 
-              name="content"
-              value={formData.content}
-              onChange={handleChange}
-              rows={5}
-              className="w-full p-2 rounded bg-slate-700 border border-slate-600"
-              placeholder="เนื้อหาบทความเต็มๆ..."
-              required
-            />
-          </div>
-
-          <button 
-            type="submit" 
-            disabled={loading}
-            className={`w-full py-3 rounded-lg font-bold transition-all ${loading ? 'bg-gray-600' : 'bg-green-600 hover:bg-green-500'}`}
-          >
-            {loading ? 'Creating...' : 'Create Post'}
+    <div className="p-8 lg:p-12 relative animate-in fade-in slide-in-from-bottom-4 duration-500">
+      
+      {/* Header */}
+      <header className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+        <h2 className="text-2xl font-bold text-gray-900">Create article</h2>
+        <div className="flex gap-3">
+          <button onClick={() => handleSubmit(2)} disabled={loading} className="px-6 py-2.5 rounded-full border border-gray-300 font-bold text-sm hover:bg-gray-50 transition-all text-gray-700">
+            Save as draft
           </button>
+          <button onClick={() => handleSubmit(1)} disabled={loading} className="px-6 py-2.5 rounded-full bg-black text-white font-bold text-sm hover:bg-gray-800 transition-all shadow-lg flex items-center gap-2">
+            {loading && <Loader2 className="animate-spin" size={16} />}
+            Save and publish
+          </button>
+        </div>
+      </header>
 
-          {message && (
-            <div className={`p-3 rounded text-center ${message.includes('✅') ? 'bg-green-900/50 text-green-300' : 'bg-red-900/50 text-red-300'}`}>
-              {message}
+      {/* Form Content */}
+      <div className="max-w-3xl space-y-8">
+        
+        {notification && (
+          <div className={`p-4 rounded-xl flex items-center gap-3 ${notification.type === 'success' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-red-50 text-red-700 border border-red-100'}`}>
+            {notification.type === 'success' ? <CheckCircle size={20}/> : <XCircle size={20}/>}
+            {notification.message}
+          </div>
+        )}
+
+        <div className="space-y-4">
+          <label className="block text-sm font-bold text-gray-600">Thumbnail image</label>
+          <div className="flex flex-col md:flex-row gap-6 items-start">
+            <div className="w-full md:w-[320px] aspect-video bg-gray-100 rounded-2xl border-2 border-dashed border-gray-200 flex items-center justify-center overflow-hidden relative group">
+              {formData.image ? (
+                <img src={formData.image} alt="Thumbnail" className="w-full h-full object-cover" />
+              ) : (
+                <ImageIcon className="text-gray-300" size={48} />
+              )}
             </div>
-          )}
-        </form>
+            <div className="flex-1 w-full">
+              <input type="text" name="image" value={formData.image} onChange={handleChange} placeholder="https://example.com/image.jpg" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-all text-sm" />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-bold text-gray-600 mb-2">Category</label>
+          <div className="relative">
+            <select name="category_id" value={formData.category_id} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:border-black outline-none appearance-none cursor-pointer text-gray-700">
+              <option value={1}>Highlight (แนะนำ)</option>
+              <option value={2}>Technology</option>
+              <option value={3}>Life Style</option>
+              <option value={4}>Programming</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-bold text-gray-600 mb-2">Author name</label>
+          <input type="text" name="author" value={formData.author} onChange={handleChange} className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 focus:bg-white outline-none transition-all text-gray-700" />
+        </div>
+
+        <div>
+          <label className="block text-sm font-bold text-gray-600 mb-2">Title</label>
+          <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Article title" className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-all text-gray-900 font-medium" />
+        </div>
+
+        <div>
+          <label className="block text-sm font-bold text-gray-600 mb-2">Introduction</label>
+          <textarea name="description" value={formData.description} onChange={handleChange} rows={3} placeholder="Introduction..." className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-all resize-none text-gray-700" />
+        </div>
+
+        <div>
+          <label className="block text-sm font-bold text-gray-600 mb-2">Content</label>
+          <textarea name="content" value={formData.content} onChange={handleChange} rows={12} placeholder="Content..." className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-all resize-y text-gray-700" />
+        </div>
+
       </div>
-      <Footer />
     </div>
   );
 }
