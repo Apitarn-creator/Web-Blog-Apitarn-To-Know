@@ -9,14 +9,13 @@ function Footer() {
         <div className="flex items-center gap-6">
           <span className="text-gray-600 font-medium">Get in touch</span>
           <div className="flex gap-4 text-xl text-gray-700">
-            {/* สามารถเปลี่ยน link ได้ */}
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
+            <a href="https://www.linkedin.com/in/apitarnare/" target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
               <i className="fa-brands fa-linkedin"></i>
             </a>
-            <a href="https://github.com" target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
+            <a href="https://github.com/Apitarn-creator" target="_blank" rel="noreferrer" className="hover:text-black transition-colors">
               <i className="fa-brands fa-github"></i>
             </a>
-            <a href="mailto:example@gmail.com" className="hover:text-black transition-colors">
+            <a href="mailto:workapitarn@gmail.com" className="hover:text-black transition-colors">
               <i className="fa-brands fa-google"></i>
             </a>
           </div>

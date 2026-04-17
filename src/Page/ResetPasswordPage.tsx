@@ -87,7 +87,7 @@ function ResetPasswordPage() {
                   value={formData.currentPassword}
                   onChange={handleChange}
                   placeholder="••••••••"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-all text-sm"
+                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gray-400 outline-none transition-all text-sm text-gray-900 bg-white placeholder-gray-400"
                   required
                 />
                 <button type="button" onClick={() => setShowCurrent(!showCurrent)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
@@ -109,7 +109,7 @@ function ResetPasswordPage() {
                     value={formData.newPassword}
                     onChange={handleChange}
                     placeholder="••••••••"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-all text-sm"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gray-400 outline-none transition-all text-sm text-gray-900 bg-white placeholder-gray-400"
                     required
                   />
                   <button type="button" onClick={() => setShowNew(!showNew)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
@@ -127,7 +127,7 @@ function ResetPasswordPage() {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     placeholder="••••••••"
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-black outline-none transition-all text-sm"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-gray-400 outline-none transition-all text-sm text-gray-900 bg-white placeholder-gray-400"
                     required
                   />
                   <button type="button" onClick={() => setShowConfirm(!showConfirm)} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">

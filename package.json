@@ -7,16 +7,12 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "start": "node app.mjs"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
     "axios": "^1.13.2",
-    "cors": "^2.8.6",
-    "express": "^5.2.1",
     "lucide-react": "^0.563.0",
-    "phaser": "^3.90.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-markdown": "^10.1.0",
