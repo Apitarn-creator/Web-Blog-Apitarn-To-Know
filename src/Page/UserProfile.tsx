@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Camera, CheckCircle, X, Key } from 'lucide-react';
 import { getStoredUser } from '../utils/auth';
 import { resetPassword } from '../services/articleService';
